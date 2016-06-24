@@ -5,7 +5,6 @@
  */
 package sped;
 
-import java.awt.TextField;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JOptionPane;
@@ -32,7 +31,12 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
     double distance = 0.20;
     
     boolean finished[] = new boolean[2];
+    boolean oneAccelerating = false;
     
+    /**
+     * Shows an error dialog
+     * @param errorMessage The error message to display
+     */
     private void showErrorDialog(String errorMessage){
         JOptionPane.showMessageDialog(this, errorMessage, "Uh oh...", ERROR_MESSAGE);
     }
@@ -43,6 +47,7 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
     public CollisionSimulationWindow() {
         initComponents();
         
+        //This is for when the user wants to close the window
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -52,6 +57,7 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
             }
         });
         
+        //This is for when the window shows, make sure the Arduino is properly connected
         this.addComponentListener(new ComponentAdapter() {
             public void componentHidden(ComponentEvent e) {
             }
@@ -100,12 +106,20 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         }
     }
     
+    /**
+     * Sets the mass of the object being collided.
+     * @param massInKg The mass of the object in kilograms.
+     */
     public void setMassOfObject(double massInKg){
         if(collector != null){
             collector.setMassOfObject(massInKg);
         }
     }
     
+    /**
+     * Sets the coefficient of friction of the surface that has the collision occurring on it.
+     * @param newCoefficient The new coefficient to set.
+     */
     public void setCoefficientOfFriction(double newCoefficient){
         coefficientOfFriction = newCoefficient;
     }
@@ -119,8 +133,11 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
     public void gotSpeedThroughPole(boolean frontPole, double speedInMetersPerSec, long timestamp) {
         double mass = collector.getMassOfObject();
         
-        int poleInt = frontPole ? 1 : 0;
+        int poleInt = frontPole ? 0 : 1;
         boolean before = (speeds[poleInt][0] != 0);
+        if(!frontPole && oneAccelerating){
+            before = true;
+        }
         int alreadyCalculatedInitial = before ? 1 : 0;
         
         if(finished[poleInt]){
@@ -138,14 +155,25 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         momentums[poleInt][alreadyCalculatedInitial] = momentum;
         energies[poleInt][alreadyCalculatedInitial] = kineticEnergy;
         
+        System.out.println("Setting " + poleInt +  " calc " + alreadyCalculatedInitial + " speed " + speed);
+        
         speedTextFields[poleInt][alreadyCalculatedInitial].setText(speed + "m/s");
         momentumTextFields[poleInt][alreadyCalculatedInitial].setText(momentum + "");
         energiesTextFields[poleInt][alreadyCalculatedInitial].setText(kineticEnergy + "");
         
         System.out.println("speed " + speed + " momentum " + momentum + " KE " + kineticEnergy);
         
-        if(alreadyCalculatedInitial == 1){
+        if(alreadyCalculatedInitial == 1 || (!frontPole && oneAccelerating)){
+            if(oneAccelerating){
+                speedTextFields[1][0].setText("0m/s");
+                momentumTextFields[1][0].setText("0");
+                energiesTextFields[1][0].setText("0");
+                speedTextFields[0][1].setText("0m/s");
+                momentumTextFields[0][1].setText("0");
+                energiesTextFields[0][1].setText("0");
+            }
             finished[poleInt] = true;
+            
         }
         //System.out.println
         //Speed before
@@ -219,7 +247,7 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart1BeforeKineticLabel.setText("Kinetic Energy");
 
         cart1BeforeKineticTextField.setEditable(false);
-        cart1BeforeKineticTextField.setText("0.352");
+        cart1BeforeKineticTextField.setText("Waiting...");
         cart1BeforeKineticTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cart1BeforeKineticTextFieldActionPerformed(evt);
@@ -229,12 +257,12 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart1BeforeMomentumLabel.setText("Momentum");
 
         cart1BeforeMomentumTextField.setEditable(false);
-        cart1BeforeMomentumTextField.setText("0.839 ");
+        cart1BeforeMomentumTextField.setText("Waiting...");
 
         cart1BeforeSpeedLabel.setText("Speed");
 
         cart1BeforeSpeedTextField.setEditable(false);
-        cart1BeforeSpeedTextField.setText("0.839 m/s");
+        cart1BeforeSpeedTextField.setText("Waiting...");
         cart1BeforeSpeedTextField.setToolTipText("");
 
         javax.swing.GroupLayout cart1BeforePanelLayout = new javax.swing.GroupLayout(cart1BeforePanel);
@@ -282,17 +310,17 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart1AfterKineticLabel.setText("Kinetic Energy");
 
         cart1AfterKineticTextField.setEditable(false);
-        cart1AfterKineticTextField.setText("Calculating...");
+        cart1AfterKineticTextField.setText("Waiting...");
 
         cart1AfterMomentumLabel.setText("Momentum");
 
         cart1AfterMomentumTextField.setEditable(false);
-        cart1AfterMomentumTextField.setText("Calculating...");
+        cart1AfterMomentumTextField.setText("Waiting...");
 
         cart1AfterSpeedLabel.setText("Speed");
 
         cart1AfterSpeedTextField.setEditable(false);
-        cart1AfterSpeedTextField.setText("Calculating...");
+        cart1AfterSpeedTextField.setText("Waiting...");
 
         javax.swing.GroupLayout cart1AfterPanelLayout = new javax.swing.GroupLayout(cart1AfterPanel);
         cart1AfterPanel.setLayout(cart1AfterPanelLayout);
@@ -339,7 +367,7 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart2BeforeKineticLabel.setText("Kinetic Energy");
 
         cart2BeforeKineticTextField.setEditable(false);
-        cart2BeforeKineticTextField.setText("0");
+        cart2BeforeKineticTextField.setText("Waiting...");
         cart2BeforeKineticTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cart2BeforeKineticTextFieldActionPerformed(evt);
@@ -349,12 +377,12 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart2BeforeMomentumLabel.setText("Momentum");
 
         cart2BeforeMomentumTextField.setEditable(false);
-        cart2BeforeMomentumTextField.setText("0");
+        cart2BeforeMomentumTextField.setText("Waiting...");
 
         cart2BeforeSpeedLabel.setText("Speed");
 
         cart2BeforeSpeedTextField.setEditable(false);
-        cart2BeforeSpeedTextField.setText("0");
+        cart2BeforeSpeedTextField.setText("Waiting...");
 
         javax.swing.GroupLayout cart2BeforePanelLayout = new javax.swing.GroupLayout(cart2BeforePanel);
         cart2BeforePanel.setLayout(cart2BeforePanelLayout);
@@ -401,17 +429,17 @@ public class CollisionSimulationWindow extends javax.swing.JFrame implements Dat
         cart2AfterKineticLabel.setText("Kinetic Energy");
 
         cart2AfterKineticTextField.setEditable(false);
-        cart2AfterKineticTextField.setText("Calculating...");
+        cart2AfterKineticTextField.setText("Waiting...");
 
         cart2AfterMomentumLabel.setText("Momentum");
 
         cart2AfterMomentumTextField.setEditable(false);
-        cart2AfterMomentumTextField.setText("Calculating...");
+        cart2AfterMomentumTextField.setText("Waiting...");
 
         cart2AfterSpeedLabel.setText("Speed");
 
         cart2AfterSpeedTextField.setEditable(false);
-        cart2AfterSpeedTextField.setText("Calculating...");
+        cart2AfterSpeedTextField.setText("Waiting...");
 
         javax.swing.GroupLayout cart2AfterPanelLayout = new javax.swing.GroupLayout(cart2AfterPanel);
         cart2AfterPanel.setLayout(cart2AfterPanelLayout);

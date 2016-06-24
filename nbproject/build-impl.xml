@@ -1027,6 +1027,11 @@ is divided into following sections:
     <target name="-post-jar">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
+        <echo>Copying over extra jars into meme</echo>
+        <copy todir="./dist/lib">
+            <!-- put in order from least important to most important to prevent file overwrites -->
+            <fileset dir="/Users/edwinfinch/Documents/rxtx-2.1-7-bins-r2/Mac_OS_X"></fileset>
+        </copy>
     </target>
     <target depends="init,compile,-pre-jar,-do-jar-without-libraries,-do-jar-with-libraries,-post-jar" name="-do-jar"/>
     <target depends="init,compile,-pre-jar,-do-jar,-post-jar" description="Build JAR." name="jar"/>

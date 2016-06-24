@@ -19,6 +19,10 @@ public class OneDimensionSimulationWindow extends javax.swing.JFrame implements 
     DataCollector collector;
     ArduinoConnection arduinoConnection;
     
+    /**
+     * Shows an error dialog
+     * @param errorMessage The error message to display
+     */
     private void showErrorDialog(String errorMessage){
         JOptionPane.showMessageDialog(this, errorMessage, "Uh oh...", ERROR_MESSAGE);
     }
@@ -29,6 +33,7 @@ public class OneDimensionSimulationWindow extends javax.swing.JFrame implements 
     public OneDimensionSimulationWindow() {
         initComponents();
         
+        //For when the window closes
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -37,6 +42,8 @@ public class OneDimensionSimulationWindow extends javax.swing.JFrame implements 
                 System.out.println("Done");
             }
         });
+        
+        //For when the window opens
         this.addComponentListener(new ComponentAdapter() {
             public void componentHidden(ComponentEvent e) {
             }
@@ -65,6 +72,10 @@ public class OneDimensionSimulationWindow extends javax.swing.JFrame implements 
         }
     }
     
+    /**
+     * Sets the mass of the object in kilograms
+     * @param massInKg The mass of the object
+     */
     public void setMassOfObject(double massInKg){
         if(collector != null){
             collector.setMassOfObject(massInKg);

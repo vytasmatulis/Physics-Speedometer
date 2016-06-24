@@ -145,7 +145,7 @@
         <Component class="javax.swing.JTextField" name="cart1BeforeKineticTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.352"/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cart1BeforeKineticTextFieldActionPerformed"/>
@@ -159,7 +159,7 @@
         <Component class="javax.swing.JTextField" name="cart1BeforeMomentumTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.839 "/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart1BeforeSpeedLabel">
@@ -170,7 +170,7 @@
         <Component class="javax.swing.JTextField" name="cart1BeforeSpeedTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.839 m/s"/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -243,7 +243,7 @@
         <Component class="javax.swing.JTextField" name="cart1AfterKineticTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart1AfterMomentumLabel">
@@ -254,7 +254,7 @@
         <Component class="javax.swing.JTextField" name="cart1AfterMomentumTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart1AfterSpeedLabel">
@@ -265,7 +265,7 @@
         <Component class="javax.swing.JTextField" name="cart1AfterSpeedTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -337,7 +337,7 @@
         <Component class="javax.swing.JTextField" name="cart2BeforeKineticTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cart2BeforeKineticTextFieldActionPerformed"/>
@@ -351,7 +351,7 @@
         <Component class="javax.swing.JTextField" name="cart2BeforeMomentumTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart2BeforeSpeedLabel">
@@ -362,7 +362,7 @@
         <Component class="javax.swing.JTextField" name="cart2BeforeSpeedTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -434,7 +434,7 @@
         <Component class="javax.swing.JTextField" name="cart2AfterKineticTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart2AfterMomentumLabel">
@@ -445,7 +445,7 @@
         <Component class="javax.swing.JTextField" name="cart2AfterMomentumTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="cart2AfterSpeedLabel">
@@ -456,7 +456,7 @@
         <Component class="javax.swing.JTextField" name="cart2AfterSpeedTextField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Calculating..."/>
+            <Property name="text" type="java.lang.String" value="Waiting..."/>
           </Properties>
         </Component>
       </SubComponents>

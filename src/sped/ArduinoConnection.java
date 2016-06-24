@@ -13,16 +13,29 @@ import java.util.logging.Logger;
  * @author ericjbruno
  */
 
+/**
+ * The callback for Arduino serial events
+ * @author edwinfinch
+ */
 interface ArduinoConnectionCallback {
     void serialEvent(String serialOutput);
 }
 
+/**
+ * The ArduinoConnection class allows for easy use of hooking onto an Arduino and reading
+ * data live from the serial port. It implements this through SerialPortEventListener.
+ * 
+ * @author edwinfinch
+ */
 public class ArduinoConnection implements SerialPortEventListener {
     SerialPort serialPort = null;
     ArduinoConnectionCallback connectionCallback;
     public boolean connected = false;
     ArduinoConnectionResult mostRecentResult;
 
+    /**
+     * Change this depending on the platform
+     */
     private static final String PORT_NAMES[] = { 
         "/dev/tty.usbmodem", // Mac OS X
 //        "/dev/usbdev", // Linux
@@ -31,6 +44,10 @@ public class ArduinoConnection implements SerialPortEventListener {
 //        "COM3", // Windows
     };
     
+    /**
+     * The ArduinoConnectionResult is an enum which keeps track of the possibilities
+     * of an ArduinoConnection being initialized.
+     */
     public enum ArduinoConnectionResult {
         Success, ErrorNotFound, ErrorPortInUse, ErrorUnknown, NotInitialized;
         
@@ -56,10 +73,18 @@ public class ArduinoConnection implements SerialPortEventListener {
     private static final int TIME_OUT = 1000; // Port open timeout
     private static final int DATA_RATE = 9600; // Arduino serial port
     
+    /**
+     * Sets the serial data listener for streaming to an external source
+     * @param callback The callback to hook
+     */
     public void setOnSerialListener(ArduinoConnectionCallback callback){
         connectionCallback = callback;
     }
 
+    /**
+     * Initializes the ArduinoConnection if there is an Arduino available
+     * @return The ArduinoConnectionResult of how the initialization went
+     */
     public ArduinoConnectionResult initialize() {
         try {
             CommPortIdentifier portId = null;
@@ -122,6 +147,10 @@ public class ArduinoConnection implements SerialPortEventListener {
         return ArduinoConnectionResult.ErrorUnknown;
     }
     
+    /**
+     * Send data to the Arduino. We currently have no need for this and are keeping it for future use.
+     * @param data 
+     */
     private void sendData(String data) {
         try {
             System.out.println("Sending data: '" + data +"'");
@@ -136,13 +165,16 @@ public class ArduinoConnection implements SerialPortEventListener {
         }
     }
 
+    /**
+     * Prepares the ArduinoConnection instance for close. Do any cleanup here.
+     */
     public synchronized void prepareForClose(){
         input = null;
     }
     
-    //
-    // This should be called when you stop using the port
-    //
+    /**
+     * Closes the connection to the Arduino.
+     */
     public synchronized void close() {
         System.out.println("Got close request");
         input = null;
@@ -158,9 +190,10 @@ public class ArduinoConnection implements SerialPortEventListener {
         }
     }
 
-    //
-    // Handle serial port event
-    //
+    /**
+     * Handles new serial events from the Arduino. Updates live.
+     * @param oEvent The event
+     */
     public void serialEvent(SerialPortEvent oEvent) {
         //System.out.println("Event received: " + oEvent.toString());
         try {
@@ -188,6 +221,9 @@ public class ArduinoConnection implements SerialPortEventListener {
         }
     }
 
+    /**
+     * Sets up a new ArduinoConnection instance
+     */
     public ArduinoConnection() {
         appName = getClass().getName();
     }

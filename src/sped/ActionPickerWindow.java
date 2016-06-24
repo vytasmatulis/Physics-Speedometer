@@ -5,6 +5,10 @@
  */
 package sped;
 
+import java.awt.Desktop;
+import java.io.File;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import sped.ArduinoConnection.ArduinoConnectionResult;
 
 /**
@@ -35,7 +39,6 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
         welcomeLabel = new javax.swing.JLabel();
         whatWouldYouLikeLabel = new javax.swing.JLabel();
         doSomethingElsePanel = new javax.swing.JPanel();
-        settingsButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
         testSignalToArduinoButton = new javax.swing.JButton();
         viewAllButton = new javax.swing.JButton();
@@ -53,9 +56,12 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
 
         doSomethingElsePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        settingsButton.setText("Settings");
-
         helpButton.setText("Help");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
         testSignalToArduinoButton.setText("Test Connection To Arduino");
         testSignalToArduinoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,29 +81,23 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
         doSomethingElsePanel.setLayout(doSomethingElsePanelLayout);
         doSomethingElsePanelLayout.setHorizontalGroup(
             doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doSomethingElsePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(helpButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(testSignalToArduinoButton)
-                .addGap(55, 55, 55)
-                .addComponent(settingsButton)
-                .addContainerGap())
-            .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
-                .addGap(159, 159, 159)
+                .addGap(18, 18, 18)
                 .addComponent(viewAllButton)
+                .addGap(18, 18, 18)
+                .addComponent(testSignalToArduinoButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         doSomethingElsePanelLayout.setVerticalGroup(
             doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(viewAllButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(settingsButton)
                     .addComponent(helpButton)
-                    .addComponent(testSignalToArduinoButton))
+                    .addComponent(testSignalToArduinoButton)
+                    .addComponent(viewAllButton))
                 .addContainerGap())
         );
 
@@ -128,14 +128,60 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Shows an error dialog.
+     * @param errorMessage The error message to display
+     */
+    private void showErrorDialog(String errorMessage){
+        JOptionPane.showMessageDialog(this, errorMessage, "Uh oh...", ERROR_MESSAGE);
+    }
+    
+    /**
+     * Test the connection to the Arduino. One click to work
+     * @param evt 
+     */
     private void testSignalToArduinoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testSignalToArduinoButtonActionPerformed
-        // TODO add your handling code here:
+        arduinoConnection = new ArduinoConnection();
+
+        ArduinoConnectionResult result = arduinoConnection.initialize();
+        arduinoConnection.mostRecentResult = result;
+        boolean connectedToArduino = (result == ArduinoConnectionResult.Success);
+        if(!connectedToArduino){
+            showErrorDialog("Failed to connect, " + result.getMessage());
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Arduino is properly connected!");
+        }
+        
+        arduinoConnection.close();
+        
+        System.out.println("Closed connection");
     }//GEN-LAST:event_testSignalToArduinoButtonActionPerformed
 
+    /**
+     * View all simulations possible
+     * @param evt 
+     */
     private void viewAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllButtonActionPerformed
         SimulationPickerWindow simulationPicker = new SimulationPickerWindow();
         simulationPicker.setVisible(true);
     }//GEN-LAST:event_viewAllButtonActionPerformed
+
+    /**
+     * View the help PDF
+     * @param evt 
+     */
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("manual.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (Exception e) {
+                // no application registered for PDFs
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_helpButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,7 +221,6 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel doSomethingElsePanel;
     private javax.swing.JButton helpButton;
-    private javax.swing.JButton settingsButton;
     private javax.swing.JButton testSignalToArduinoButton;
     private javax.swing.JButton viewAllButton;
     private javax.swing.JLabel welcomeLabel;

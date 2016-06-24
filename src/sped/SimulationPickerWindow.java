@@ -51,6 +51,11 @@ public class SimulationPickerWindow extends javax.swing.JFrame {
 
         launchSimulation1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         launchSimulation1.setText("Launch");
+        launchSimulation1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                launchSimulation1ActionPerformed(evt);
+            }
+        });
 
         launchSimulation2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         launchSimulation2.setText("Launch");
@@ -225,10 +230,15 @@ public class SimulationPickerWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Shows an error dialog
+     * @param errorMessage The error message to show
+     */
     private void showErrorDialog(String errorMessage){
         JOptionPane.showMessageDialog(this, errorMessage, "Uh oh...", ERROR_MESSAGE);
     }
     
+    //Launches 1d acceleration
     private void launchSimulation2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSimulation2ActionPerformed
         if(oneDimensionMassTextField.getText().equals("")){
             showErrorDialog("Please enter a value for the mass.");
@@ -254,6 +264,10 @@ public class SimulationPickerWindow extends javax.swing.JFrame {
         oneDWindow.setMassOfObject(mass);
     }//GEN-LAST:event_launchSimulation2ActionPerformed
 
+    /**
+     * Launch the two cart collision acceleration simulation
+     * @param evt 
+     */
     private void launchSimulation0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSimulation0ActionPerformed
         JTextField[] fields = {
             twoCarsAccelCoefficientTextField, twoCarsAccelMassTextField
@@ -279,6 +293,37 @@ public class SimulationPickerWindow extends javax.swing.JFrame {
         collisionWindow.setVisible(true);
         collisionWindow.setMassOfObject(data[1]);
     }//GEN-LAST:event_launchSimulation0ActionPerformed
+
+    /**
+     * Launches the one cart acceleration simulation
+     * @param evt 
+     */
+    private void launchSimulation1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchSimulation1ActionPerformed
+        JTextField[] fields = {
+            twoCarsAccelCoefficientTextField, twoCarsAccelMassTextField
+        };
+        String[] fieldNames = {
+            "coefficient", "cart mass"
+        };
+        double[] data = new double[2];
+        try{
+            for(int i = 0; i < fields.length; i++){
+                data[i] = Double.parseDouble(fields[i].getText());
+                if(data[i] < 0){
+                    showErrorDialog("Please enter a positive number for the " + fieldNames[i] + ".");
+                    return;
+                }
+            }
+        } catch(Exception e){
+            showErrorDialog("Sorry, one of your inputs are invalid, please make sure you're only typing in numbers.");
+            return;
+        }
+        
+        CollisionSimulationWindow collisionWindow = new CollisionSimulationWindow();
+        collisionWindow.setVisible(true);
+        collisionWindow.setMassOfObject(data[1]);
+        collisionWindow.oneAccelerating = true;
+    }//GEN-LAST:event_launchSimulation1ActionPerformed
 //
 //    public static void main(String args[]) {
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
