@@ -2,9 +2,12 @@ package sped;
 
 import gnu.io.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author ericjbruno
@@ -17,6 +20,8 @@ interface ArduinoConnectionCallback {
 public class ArduinoConnection implements SerialPortEventListener {
     SerialPort serialPort = null;
     ArduinoConnectionCallback connectionCallback;
+    public boolean connected = false;
+    ArduinoConnectionResult mostRecentResult;
 
     private static final String PORT_NAMES[] = { 
         "/dev/tty.usbmodem", // Mac OS X
@@ -27,7 +32,7 @@ public class ArduinoConnection implements SerialPortEventListener {
     };
     
     public enum ArduinoConnectionResult {
-        Success, ErrorNotFound, ErrorPortInUse, ErrorUnknown;
+        Success, ErrorNotFound, ErrorPortInUse, ErrorUnknown, NotInitialized;
         
         public String getMessage(){
             switch(this){
@@ -37,6 +42,8 @@ public class ArduinoConnection implements SerialPortEventListener {
                     return "no Arduino was found :(";
                 case ErrorPortInUse:
                     return "something is already using the Arduino";
+                case NotInitialized:
+                    return "the Arduino connection has not been initialized";
             }
             return "unknown error";
         }
@@ -101,6 +108,7 @@ public class ArduinoConnection implements SerialPortEventListener {
             // Give the Arduino some time
             try { Thread.sleep(2000); } catch (InterruptedException ie) {}
             
+            connected = true;
             return ArduinoConnectionResult.Success;
         }
         catch ( Exception e ) { 
@@ -128,26 +136,38 @@ public class ArduinoConnection implements SerialPortEventListener {
         }
     }
 
+    public synchronized void prepareForClose(){
+        input = null;
+    }
+    
     //
     // This should be called when you stop using the port
     //
     public synchronized void close() {
+        System.out.println("Got close request");
+        input = null;
         if ( serialPort != null ) {
             System.out.println("Closing connection.");
             serialPort.removeEventListener();
+            System.out.println("Removed event listener");
             serialPort.close();
+            System.out.println("Closed");
+        }
+        else{
+            System.out.println("Can't close, serialPort is null");
         }
     }
 
     //
     // Handle serial port event
     //
-    public synchronized void serialEvent(SerialPortEvent oEvent) {
+    public void serialEvent(SerialPortEvent oEvent) {
         //System.out.println("Event received: " + oEvent.toString());
         try {
             switch (oEvent.getEventType() ) {
                 case SerialPortEvent.DATA_AVAILABLE: 
                     if ( input == null ) {
+                        System.out.println("Building input");
                         input = new BufferedReader(
                             new InputStreamReader(
                                     serialPort.getInputStream()));

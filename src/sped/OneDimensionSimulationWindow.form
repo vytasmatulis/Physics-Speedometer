@@ -2,7 +2,8 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -32,6 +33,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="currentMomentumLabel" alignment="1" max="32767" attributes="0"/>
                           <Component id="initialTimeLabel" max="32767" attributes="0"/>
                           <Component id="initialSpeedLabel" max="32767" attributes="0"/>
                           <Component id="finalTimeLabel" alignment="0" max="32767" attributes="0"/>
@@ -39,6 +41,8 @@
                           <Component id="accelerationLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="forceOfFrictionLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="coefficientOfFrictionLabel" alignment="0" pref="482" max="32767" attributes="0"/>
+                          <Component id="massLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="kineticEnergyLabel" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -65,6 +69,12 @@
               <Component id="forceOfFrictionLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="coefficientOfFrictionLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="currentMomentumLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="kineticEnergyLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="massLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -134,6 +144,30 @@
           <Font name="Helvetica Neue" size="18" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Coefficient of friction: N/A"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="currentMomentumLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Helvetica Neue" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Current momentum: N/A"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="massLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Helvetica Neue" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Mass: N/A"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="kineticEnergyLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Helvetica Neue" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Kinetic energy: N/A"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -5,6 +5,8 @@
  */
 package sped;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import org.json.JSONObject;
 
@@ -15,12 +17,13 @@ import org.json.JSONObject;
 
 interface DataCollectorCallback {
     void gotTravelThroughSensor(int sensorPin, long timeTravelled);
-    void gotSpeedThroughPole(boolean frontPole, double speedInCmPerSec, long timestamp);
-    void gotAccelerationAndFriction(double accelerationInCmSquaredPerSec, double forceOfFriction, double coefficientOfFriction);
+    void gotSpeedThroughPole(boolean frontPole, double speedInMetersPerSec, long timestamp);
+    void gotAccelerationAndFriction(double accelerationInMetersPerSecSquared, double forceOfFriction, double coefficientOfFriction);
 }
 
 public class DataCollector implements ArduinoConnectionCallback {
     final int LOWEST_PIN = 10;
+    final static int DECIMAL_PLACES = 3;
     final double DISTANCE_BETWEEN_SENSORS_CM = 5.7;
     final double DISTANCE_BETWEEN_POLES_CM = 33.6;
     final double FORCE_OF_GRAVITY = 9.81;
@@ -35,6 +38,23 @@ public class DataCollector implements ArduinoConnectionCallback {
     private double forceOfFriction;
     private double coefficientOfFriction;
     private double accelerationInCmPerSecSquared;
+    private boolean inverted;
+    private boolean isCollisionSimulation;
+    
+    public static double roundTo(double toRound, int decimalPlaces){
+        String format = "#.";
+        for(int i = 0; i < decimalPlaces; i++){
+            format += "#";
+        }
+        DecimalFormat df = new DecimalFormat(format);
+        df.setRoundingMode(RoundingMode.CEILING);
+        double newDouble = Double.parseDouble(df.format(toRound));
+        return newDouble;
+    }
+    
+    public static double round(double toRound){
+        return roundTo(toRound, DECIMAL_PLACES);
+    }
     
     public void setDataCollectionCallback(DataCollectorCallback callback){
         dataCollectionCallback = callback;
@@ -42,6 +62,14 @@ public class DataCollector implements ArduinoConnectionCallback {
     
     public void setMassOfObject(double massInKg){
         massOfObjectInKg = massInKg;
+    }
+    
+    public void setIsCollisionSimulation(boolean yesOrNo){
+        isCollisionSimulation = yesOrNo;
+    }
+    
+    public double getMassOfObject(){
+        return massOfObjectInKg;
     }
     
     private int getAssociatedFixedPin(int pin){
@@ -72,49 +100,105 @@ public class DataCollector implements ArduinoConnectionCallback {
         int fixedPin = sensorPin-LOWEST_PIN;
         boolean broken = object.getBoolean("broken");
         
-        if(broken){
-            sensorBreakTimes[fixedPin] = System.currentTimeMillis();
-            
-            if(fixedPin == 0){
-                timeInitial = System.currentTimeMillis();
-            }
-            if(fixedPin == 3){
-                timeFinal = System.currentTimeMillis();
-            }
-            
-            long associatedBreakTime = sensorBreakTimes[getAssociatedFixedPin(fixedPin)];
-            if(associatedBreakTime != 0){
-                //System.out.println("Both times exist");
-                double time = (double)(sensorBreakTimes[fixedPin]-associatedBreakTime)/1000;
-                System.out.println(time);
-                double speed = DISTANCE_BETWEEN_SENSORS_CM/time;
-                boolean frontPole = (fixedPin == 0 || fixedPin == 1);
-                poleSpeeds[frontPole ? 0 : 1] = speed;
-                if(dataCollectionCallback != null){
-                    dataCollectionCallback.gotSpeedThroughPole(frontPole, speed, frontPole ? 0 : timeFinal-timeInitial);
-                    if(poleSpeeds[0] != 0 && poleSpeeds[1] != 0){
-                        accelerationInCmPerSecSquared = accelerationForSpeeds(poleSpeeds[0], poleSpeeds[1]);
-                        forceOfFriction = accelerationInCmPerSecSquared*massOfObjectInKg;
-                        coefficientOfFriction = forceOfFriction/(massOfObjectInKg*FORCE_OF_GRAVITY);
-                        dataCollectionCallback.gotAccelerationAndFriction(accelerationInCmPerSecSquared, forceOfFriction, coefficientOfFriction);
-                        
+        if(!isCollisionSimulation){
+            if(broken){
+                sensorBreakTimes[fixedPin] = System.currentTimeMillis();
+
+                if(fixedPin == 0){
+                    if(timeInitial == 0){
+                        timeInitial = System.currentTimeMillis();
+                    }
+                    else{
+                        timeFinal = System.currentTimeMillis();
+                    }
+                }
+                if(fixedPin == 3){
+                    if(timeInitial == 0){
+                        inverted = true;
+                        timeInitial = System.currentTimeMillis();
+                    }
+                    else{
+                        timeFinal = System.currentTimeMillis();
+                    }
+                }
+
+                int firstSensor = inverted ? 3 : 0;
+                int secondSensor = inverted ? 2 : 1;
+
+                System.out.println("Inverted: " + inverted);
+
+                long associatedBreakTime = sensorBreakTimes[getAssociatedFixedPin(fixedPin)];
+                if(associatedBreakTime != 0){
+                    //System.out.println("Both times exist");
+                    double time = (double)(sensorBreakTimes[fixedPin]-associatedBreakTime)/1000;
+                    double speed = DISTANCE_BETWEEN_SENSORS_CM/time;
+                    boolean frontPole = (fixedPin == firstSensor || fixedPin == secondSensor);
+                    poleSpeeds[frontPole ? 0 : 1] = speed;
+                    if(dataCollectionCallback != null){
+                        System.out.println("1D: Initial time " + timeInitial + " final time " + timeFinal);
+                        dataCollectionCallback.gotSpeedThroughPole(frontPole, round(speed/100), frontPole ? 0 : (timeFinal-timeInitial));
+                        if(poleSpeeds[0] != 0 && poleSpeeds[1] != 0){
+                            accelerationInCmPerSecSquared = accelerationForSpeeds(poleSpeeds[0], poleSpeeds[1]);
+                            forceOfFriction = (accelerationInCmPerSecSquared/100)*massOfObjectInKg;
+                            coefficientOfFriction = forceOfFriction/(massOfObjectInKg*FORCE_OF_GRAVITY);
+                            dataCollectionCallback.gotAccelerationAndFriction(roundTo(accelerationInCmPerSecSquared/100, 5), round(forceOfFriction), round(coefficientOfFriction));
+
+                            inverted = false;
+                            timeInitial = 0;
+                            timeFinal = 0;
+                            poleSpeeds[0] = 0;
+                            poleSpeeds[1] = 0;
+                            for(int i = 0; i < sensorBreakTimes.length; i++){
+                                sensorBreakTimes[i] = 0;
+                                sensorUnbreakTimes[i] = 0;
+                            }
+                        }
                     }
                 }
             }
+            else{
+                sensorUnbreakTimes[fixedPin] = System.currentTimeMillis();
+
+                long totalTime = sensorUnbreakTimes[fixedPin]-sensorBreakTimes[fixedPin];
+                if(dataCollectionCallback != null){
+                    dataCollectionCallback.gotTravelThroughSensor(sensorPin, totalTime);
+                }
+
+                //sensorUnbreakTimes[fixedPin] = 0;
+                //sensorBreakTimes[fixedPin] = 0;
+            }
         }
         else{
-            sensorUnbreakTimes[fixedPin] = System.currentTimeMillis();
-            
-            long totalTime = sensorUnbreakTimes[fixedPin]-sensorBreakTimes[fixedPin];
-            if(dataCollectionCallback != null){
-                dataCollectionCallback.gotTravelThroughSensor(sensorPin, totalTime);
+            if(broken){
+                sensorBreakTimes[fixedPin] = System.currentTimeMillis();
+
+                int firstSensor = 0;
+                int secondSensor = 1;
+
+                long associatedBreakTime = sensorBreakTimes[getAssociatedFixedPin(fixedPin)];
+                if(associatedBreakTime != 0){
+                    double time = (double)(sensorBreakTimes[fixedPin]-associatedBreakTime)/1000;
+                    double speed = DISTANCE_BETWEEN_SENSORS_CM/time;
+                    boolean frontPole = (fixedPin == firstSensor || fixedPin == secondSensor);
+                    int poleInt = frontPole ? 0 : 1;
+                    poleSpeeds[poleInt] = speed;
+                    if(dataCollectionCallback != null){
+                        dataCollectionCallback.gotSpeedThroughPole(frontPole, round(speed/100), frontPole ? 0 : (timeFinal-timeInitial));
+                        poleSpeeds[poleInt] = 0;
+                        for(int i = 0; i < 2; i++){
+                            sensorBreakTimes[i + (poleInt*2)] = 0;
+                            sensorUnbreakTimes[i + (poleInt*2)] = 0;
+                        }
+                    }
+                }
             }
-            
-            sensorUnbreakTimes[fixedPin] = 0;
-            sensorBreakTimes[fixedPin] = 0;
+            else{
+                sensorUnbreakTimes[fixedPin] = System.currentTimeMillis();
+            }
         }
-        System.out.println("Break times: " + Arrays.toString(sensorBreakTimes) + " Unbreak times: " + Arrays.toString(sensorUnbreakTimes));
-        System.out.println(broken + " for " + sensorPin);
+
+        //System.out.println("Break times: " + Arrays.toString(sensorBreakTimes) + " Unbreak times: " + Arrays.toString(sensorUnbreakTimes));
+        //System.out.println(broken + " for " + sensorPin);
     }
     
 }

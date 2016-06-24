@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -26,34 +26,30 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel1" alignment="0" pref="220" max="32767" attributes="0"/>
-                          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel2" max="32767" attributes="0"/>
-                          <Component id="jLabel2" pref="234" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel3" max="32767" attributes="0"/>
-                          <Component id="jLabel3" pref="220" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                      <Component id="launchSimulation0" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="165" max="32767" attributes="0"/>
-                      <Component id="launchSimulation1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
-                      <Component id="launchSimulation2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jLabel1" alignment="0" pref="220" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Component id="jLabel2" pref="234" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel3" max="32767" attributes="0"/>
+                  <Component id="jLabel3" pref="220" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+              <Component id="launchSimulation0" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="158" max="32767" attributes="0"/>
+              <Component id="launchSimulation1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
+              <Component id="launchSimulation2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,18 +63,18 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel2" max="32767" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
-                  <Component id="jPanel3" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="launchSimulation0" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="launchSimulation1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="launchSimulation2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="launchSimulation0" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,6 +87,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Launch"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="launchSimulation0ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="launchSimulation1">
       <Properties>
@@ -123,15 +122,56 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="twoCarsAccelCoefficientTextField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="twoCarsAccelMassTextField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="twoCarsAccelMassLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="twoCarsAccelCoefficientLabel" alignment="0" pref="206" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="twoCarsAccelCoefficientLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="twoCarsAccelCoefficientTextField" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="twoCarsAccelMassLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="twoCarsAccelMassTextField" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="twoCarsAccelCoefficientLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Coefficient of Friction"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoCarsAccelCoefficientTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0.07"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoCarsAccelMassLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Mass of One Cart (in kg)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoCarsAccelMassTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0.508"/>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
@@ -145,15 +185,56 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="twoCarsOneAccelCoefficientTextField" max="32767" attributes="0"/>
+                      <Component id="twoCarsOneAccelMassTextField" max="32767" attributes="0"/>
+                      <Component id="twoCarsOneAccelMassLabel" max="32767" attributes="0"/>
+                      <Component id="twoCarsOneAccelCoefficientLabel" alignment="0" pref="220" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="323" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="twoCarsOneAccelCoefficientLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="twoCarsOneAccelCoefficientTextField" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="twoCarsOneAccelMassLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="twoCarsOneAccelMassTextField" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="twoCarsOneAccelMassTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0.508"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoCarsOneAccelMassLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Mass of One Cart (in kg)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="twoCarsOneAccelCoefficientTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0.07"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="twoCarsOneAccelCoefficientLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Coefficient of Friction"/>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel3">
       <Properties>
@@ -184,7 +265,7 @@
                   <Component id="oneDimensionMassLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="oneDimensionMassTextField" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -193,11 +274,12 @@
         <Component class="javax.swing.JTextField" name="oneDimensionMassTextField">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="0.508"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="oneDimensionMassLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mass (in kg)"/>
+            <Property name="text" type="java.lang.String" value="Mass of Cart (in kg)"/>
           </Properties>
         </Component>
       </SubComponents>

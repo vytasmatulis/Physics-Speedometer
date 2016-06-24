@@ -34,153 +34,42 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
 
         welcomeLabel = new javax.swing.JLabel();
         whatWouldYouLikeLabel = new javax.swing.JLabel();
-        manageArduinoPanel = new javax.swing.JPanel();
-        manageArduinoLabel = new javax.swing.JLabel();
-        connectArduinoLabel = new javax.swing.JLabel();
-        connectArduinoButton = new javax.swing.JButton();
-        testSignalToArduinoButton = new javax.swing.JButton();
-        startSimulationPanel = new javax.swing.JPanel();
-        startSimulationLabel = new javax.swing.JLabel();
-        simulationDescriptionButton = new javax.swing.JLabel();
-        simulation1QuickLaunchButton = new javax.swing.JButton();
-        simulation2QuickLaunchButton = new javax.swing.JButton();
-        simulation3QuickLaunchButton = new javax.swing.JButton();
-        viewAllButton = new javax.swing.JButton();
         doSomethingElsePanel = new javax.swing.JPanel();
-        doSomethingElseLabel = new javax.swing.JLabel();
-        doSomethingElseDescriptionLabel = new javax.swing.JLabel();
         settingsButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
+        testSignalToArduinoButton = new javax.swing.JButton();
+        viewAllButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         welcomeLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        welcomeLabel.setText("Welcome to Sped 1.0");
+        welcomeLabel.setText("Welcome to Mave");
 
         whatWouldYouLikeLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         whatWouldYouLikeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         whatWouldYouLikeLabel.setText("What would you like to do?");
         whatWouldYouLikeLabel.setToolTipText("");
 
-        manageArduinoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        doSomethingElsePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        manageArduinoLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        manageArduinoLabel.setText("Manage My Arduino");
+        settingsButton.setText("Settings");
 
-        connectArduinoLabel.setText("Your Arduino is not connected. ");
+        helpButton.setText("Help");
 
-        connectArduinoButton.setText("Connect");
-        connectArduinoButton.setToolTipText("");
-        connectArduinoButton.addActionListener(new java.awt.event.ActionListener() {
+        testSignalToArduinoButton.setText("Test Connection To Arduino");
+        testSignalToArduinoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connectArduinoButtonActionPerformed(evt);
+                testSignalToArduinoButtonActionPerformed(evt);
             }
         });
 
-        testSignalToArduinoButton.setText("Send Test Signal");
-
-        javax.swing.GroupLayout manageArduinoPanelLayout = new javax.swing.GroupLayout(manageArduinoPanel);
-        manageArduinoPanel.setLayout(manageArduinoPanelLayout);
-        manageArduinoPanelLayout.setHorizontalGroup(
-            manageArduinoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageArduinoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(manageArduinoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(manageArduinoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(connectArduinoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(manageArduinoPanelLayout.createSequentialGroup()
-                        .addComponent(connectArduinoButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(testSignalToArduinoButton)))
-                .addContainerGap())
-        );
-        manageArduinoPanelLayout.setVerticalGroup(
-            manageArduinoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageArduinoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(manageArduinoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(connectArduinoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addGroup(manageArduinoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(connectArduinoButton)
-                    .addComponent(testSignalToArduinoButton))
-                .addContainerGap())
-        );
-
-        startSimulationPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        startSimulationLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        startSimulationLabel.setText("Start a Simulation");
-
-        simulationDescriptionButton.setText("To quick launch a simulation, click its button below, otherwise, view all.");
-
-        simulation1QuickLaunchButton.setText("Simulation 1");
-
-        simulation2QuickLaunchButton.setText("Simulation 2");
-
-        simulation3QuickLaunchButton.setText("Simulation 3");
-        simulation3QuickLaunchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                simulation3QuickLaunchButtonActionPerformed(evt);
-            }
-        });
-
-        viewAllButton.setText("View All");
+        viewAllButton.setText("View All Simulations");
         viewAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewAllButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout startSimulationPanelLayout = new javax.swing.GroupLayout(startSimulationPanel);
-        startSimulationPanel.setLayout(startSimulationPanelLayout);
-        startSimulationPanelLayout.setHorizontalGroup(
-            startSimulationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(startSimulationPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(startSimulationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startSimulationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(startSimulationPanelLayout.createSequentialGroup()
-                        .addComponent(simulationDescriptionButton)
-                        .addGap(0, 18, Short.MAX_VALUE))
-                    .addGroup(startSimulationPanelLayout.createSequentialGroup()
-                        .addComponent(simulation1QuickLaunchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(simulation2QuickLaunchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(simulation3QuickLaunchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(viewAllButton)))
-                .addContainerGap())
-        );
-        startSimulationPanelLayout.setVerticalGroup(
-            startSimulationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(startSimulationPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(startSimulationLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(simulationDescriptionButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addGroup(startSimulationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(simulation1QuickLaunchButton)
-                    .addComponent(simulation2QuickLaunchButton)
-                    .addComponent(simulation3QuickLaunchButton)
-                    .addComponent(viewAllButton))
-                .addContainerGap())
-        );
-
-        doSomethingElsePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        doSomethingElseLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        doSomethingElseLabel.setText("Do Something Else");
-
-        doSomethingElseDescriptionLabel.setText("There's lots in store.");
-
-        settingsButton.setText("Settings");
-
-        helpButton.setText("Help");
 
         javax.swing.GroupLayout doSomethingElsePanelLayout = new javax.swing.GroupLayout(doSomethingElsePanel);
         doSomethingElsePanel.setLayout(doSomethingElsePanelLayout);
@@ -188,28 +77,27 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
             doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(doSomethingElseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
-                        .addComponent(doSomethingElseDescriptionLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
-                        .addComponent(helpButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(settingsButton)))
+                .addComponent(helpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(testSignalToArduinoButton)
+                .addGap(55, 55, 55)
+                .addComponent(settingsButton)
                 .addContainerGap())
+            .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(viewAllButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         doSomethingElsePanelLayout.setVerticalGroup(
             doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(doSomethingElsePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(doSomethingElseLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(doSomethingElseDescriptionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(viewAllButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(doSomethingElsePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(settingsButton)
-                    .addComponent(helpButton))
+                    .addComponent(helpButton)
+                    .addComponent(testSignalToArduinoButton))
                 .addContainerGap())
         );
 
@@ -220,10 +108,8 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(manageArduinoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(whatWouldYouLikeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(startSimulationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(doSomethingElsePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -234,11 +120,7 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
                 .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(whatWouldYouLikeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(manageArduinoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startSimulationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(doSomethingElsePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -246,35 +128,13 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void connectArduinoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectArduinoButtonActionPerformed
-        if(!connectedToArduino){
-            arduinoConnection = new ArduinoConnection();
-
-            ArduinoConnectionResult result = arduinoConnection.initialize();
-            connectedToArduino = (result == ArduinoConnectionResult.Success);
-            connectArduinoLabel.setText(connectedToArduino ? "Connected to Arduino." : ("Failed to connect: " + result.getMessage()));
-            connectArduinoButton.setText(connectedToArduino ? "Disconnect" : "Connect");
-            
-            if(connectedToArduino){
-                DataCollector collector = new DataCollector();
-                collector.setDataCollectionCallback(this);
-                arduinoConnection.setOnSerialListener(collector);
-            }
-        }
-        else{
-            arduinoConnection.close();
-            connectArduinoLabel.setText("Closed connection to Arduino. Disconnected.");
-            connectArduinoButton.setText("Connect");
-        }
-    }//GEN-LAST:event_connectArduinoButtonActionPerformed
-
-    private void simulation3QuickLaunchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simulation3QuickLaunchButtonActionPerformed
-        SimulationPickerWindow simulationPicker = new SimulationPickerWindow();
-        simulationPicker.setVisible(true);
-    }//GEN-LAST:event_simulation3QuickLaunchButtonActionPerformed
+    private void testSignalToArduinoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testSignalToArduinoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_testSignalToArduinoButtonActionPerformed
 
     private void viewAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllButtonActionPerformed
-        // TODO add your handling code here:
+        SimulationPickerWindow simulationPicker = new SimulationPickerWindow();
+        simulationPicker.setVisible(true);
     }//GEN-LAST:event_viewAllButtonActionPerformed
 
     /**
@@ -313,21 +173,9 @@ public class ActionPickerWindow extends javax.swing.JFrame implements DataCollec
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton connectArduinoButton;
-    private javax.swing.JLabel connectArduinoLabel;
-    private javax.swing.JLabel doSomethingElseDescriptionLabel;
-    private javax.swing.JLabel doSomethingElseLabel;
     private javax.swing.JPanel doSomethingElsePanel;
     private javax.swing.JButton helpButton;
-    private javax.swing.JLabel manageArduinoLabel;
-    private javax.swing.JPanel manageArduinoPanel;
     private javax.swing.JButton settingsButton;
-    private javax.swing.JButton simulation1QuickLaunchButton;
-    private javax.swing.JButton simulation2QuickLaunchButton;
-    private javax.swing.JButton simulation3QuickLaunchButton;
-    private javax.swing.JLabel simulationDescriptionButton;
-    private javax.swing.JLabel startSimulationLabel;
-    private javax.swing.JPanel startSimulationPanel;
     private javax.swing.JButton testSignalToArduinoButton;
     private javax.swing.JButton viewAllButton;
     private javax.swing.JLabel welcomeLabel;
